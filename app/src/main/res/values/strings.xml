@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Databinding</string>
+    <string name="nameFormat">Full Name: %1$s·%2$s</string>
+    <string name="nameFormatWithAge">MapUser : %1$s·%2$s  Age: %3$d</string>
+    <string name="blue">blue</string>
+    <string name="red">red</string>
+    <!--When the language does not require special treatment of the given quantity (as with all numbers in Chinese, or 42 in English).-->
+    <!--
+             As a developer, you should always supply "one" and "other"
+             strings. Your translators will know which strings are actually
+             needed for their language. Always include %d in "one" because
+             translators will need to use %d for languages where "one"
+             doesn't mean 1 (as explained above).
+          -->
+    <plurals name="pineapple">
+        <item quantity="one">%d pineapple</item>
+        <item quantity="other">%d pineapples</item>
+        <item quantity="two">%d pineapples</item>
+        <item quantity="many">many pineapples</item>
+    </plurals>
+    <plurals name="apple">
+        <item quantity="one">%d apple</item>
+        <item quantity="other">%d 苹果</item>
+        <item quantity="two">%d apple</item>
+        <item quantity="many">many apple</item>
+    </plurals>
+</resources>

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import
+            alias="StringUtils"
+            type="com.willkernel.app.databinding.utils.StringUtils" />
+
+        <import type="android.view.View" />
+        <!--与元素类型 "variable" 相关联的 "type" 属性值不能包含 '<' 字符,应该写成 &lt;-->
+        <variable
+            name="user"
+            type="com.willkernel.app.databinding.model.User" />
+
+        <variable
+            name="mapUser"
+            type="android.databinding.ObservableMap&lt;String, Object>" />
+
+        <!--ResourceBinding-->
+        <variable
+            name="large"
+            type="boolean" />
+
+        <variable
+            name="firstName"
+            type="String" />
+
+        <variable
+            name="lastName"
+            type="String" />
+
+        <variable
+            name="appleCount"
+            type="int" />
+
+        <variable
+            name="pineappleCount"
+            type="int" />
+    </data>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.firstName}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.lastName}" />
+
+        <!--格式化对象的参数,string.xml 文件中：Full Name: %1$s·%2$s-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/nameFormat(user.firstName,user.lastName)}" />
+
+        <!--格式化对象的参数,string.xml 文件中：Full Name: %1$s·%2$s Age:%3$s-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/nameFormatWithAge(user.firstName,user.lastName,user.age)}" />
+
+        <!--导入ObservableMap,设置variable name=mapUser type="ObservableMap<String, Object>"-->
+        <!--map取值以添加的键值名获取,eg. mapUser['Name']  compile 错误-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{@string/nameFormatWithAge(mapUser[`Name1`], mapUser[`Name2`], 1 + (Integer)mapUser[`age`])}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="clearData"
+                android:text="clear User" />
+
+            <Button
+                style="?android:attr/buttonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="setData"
+                android:text="set User" />
+        </LinearLayout>
+
+        <!--?? 字符长度比较，可以是其他类型 int:age-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{user.fullName ?? user.lastName}" />
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <!--方法调用 import class package ,set alias StringUtils-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{StringUtils.capitalize(user.firstName)}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{StringUtils.capitalizeSentence(user.fullName)}" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:text="Age: " />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{String.valueOf(user.age)}" />
+
+            <!--import android.view.View  使用View.VISIBLE-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Adult"
+                android:textColor="@android:color/holo_red_light"
+                android:textStyle="italic"
+                android:visibility="@{user.isAdult ? View.VISIBLE : View.GONE}" />
+        </TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/black"
+            android:padding="@{large?@dimen/largePadding:@dimen/smallPadding}"
+            android:text="@string/app_name"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/nameFormat(firstName, lastName)}" />
+
+        <!--https://developer.android.com/guide/topics/resources/string-resource.html#Plurals-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@plurals/apple(appleCount,appleCount)}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@plurals/pineapple(pineappleCount,pineappleCount)}" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2i"
+            android:text="jump 2 include" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2c"
+            android:text="jump 2 collection" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2v"
+            android:text="jump 2 viewStub" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2d"
+            android:text="jump 2 dynamic" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2a"
+            android:text="jump 2 attribute" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="jump2conversation"
+            android:text="jump 2 conversation" />
+    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</layout>
